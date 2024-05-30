@@ -1,6 +1,8 @@
 ﻿#include <iostream>
+#include <tuple> 
+#include <Windows.h>
 
-template <class T>
+template<class T>
 class table
 {
 private:
@@ -81,6 +83,12 @@ public:
     {
         return arrint[i];
     }
+
+    std::tuple<int, int> Size() const 
+    {
+        return std::make_tuple(row, col);
+    }
+
     ~table()
     {
         for (int i = 0; i < row; i++)
@@ -92,13 +100,20 @@ public:
             delete[] arrint;
     }
 };
+
 int main()
 {
+    setlocale(LC_ALL, "RU");
+
     auto test = table<int>(2, 3);
     auto new_test = test;
 
     test[0][0] = 4;
-    std::cout << test[0][0] << std::endl; // выводит 4
-    system("Pause");
+    std::cout << test[0][0] << std::endl; 
+
+    int rows, cols;
+    std::tie(rows, cols) = test.Size(); 
+    std::cout << "Строки: " << rows << ", Столбцы: " << cols << std::endl; // выводит размеры таблицы
+
     return 0;
 }
